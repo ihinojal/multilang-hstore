@@ -20,7 +20,10 @@ Gem::Specification.new do |s|
     "spec/spec_helper.rb"
   ]
   s.add_dependency 'activerecord', '~> 4.0'
-  s.add_dependency 'activerecord-jdbcpostgresql-adapter', :platform => :jruby
-  s.add_dependency 'pg', '~> 0.0', :platform => :ruby
+  if (RUBY_PLATFORM == 'java')
+    s.add_dependency 'activerecord-jdbcpostgresql-adapter'
+  else
+    s.add_dependency 'pg', '~> 0.0'
+  end
 end
 
