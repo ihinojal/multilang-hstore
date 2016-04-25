@@ -23,11 +23,15 @@ module Multilang
         args.each do |attribute|
 
           define_method attribute do
-            multilang_translation_keeper(attribute).value
+            multilang_translation_keeper(attribute).translations
           end
 
           define_method "#{attribute}=" do |value|
             multilang_translation_keeper(attribute).update(value)
+          end
+
+          define_method "#{attribute}_any" do
+            multilang_translation_keeper(attribute).current_or_any_value
           end
 
           define_method "#{attribute}_before_type_cast" do

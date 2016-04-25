@@ -38,15 +38,13 @@ describe Multilang do
     I18n.locale = :ru
     rp.title = "Русский заголовок"
     rp.body = "Русский текст"
-    
+
     # test
     I18n.locale = :lv
-    rp.title.should == "Latviešu nosaukums"
-    rp.body.should == "Latviešu apraksts"
-    
-    I18n.locale = :ru
-    rp.title.should == "Русский заголовок"
-    rp.body.should == "Русский текст"
+    rp.title.should ==
+      {"lv"=>"Latviešu nosaukums", "ru"=>"Русский заголовок"}
+    rp.body.should ==
+      {"lv"=>"Latviešu apraksts", "ru"=>"Русский текст"}
   end
 
   it "should set attributes through alternative setters in RegularPost" do
@@ -65,12 +63,16 @@ describe Multilang do
     rp.body_ru.should == "Русский текст"
 
     I18n.locale = :lv
-    rp.title.should == "Latviešu nosaukums"
-    rp.body.should == "Latviešu apraksts"
+    rp.title.should ==
+      {"lv"=>"Latviešu nosaukums", "ru"=>"Русский заголовок"}
+    rp.body.should ==
+      {"lv"=>"Latviešu apraksts", "ru"=>"Русский текст"}
     
     I18n.locale = :ru
-    rp.title.should == "Русский заголовок"
-    rp.body.should == "Русский текст"
+    rp.title.should ==
+      {"lv"=>"Latviešu nosaukums", "ru"=>"Русский заголовок"}
+    rp.body.should ==
+      {"lv"=>"Latviešu apraksts", "ru"=>"Русский текст"}
   end
 
   it "should set attributes through fullset hash in RegularPost" do
@@ -196,14 +198,14 @@ describe Multilang do
                           :body_ru => "Русский текст" )
 
 
-    rp.title.should be_an_instance_of(Multilang::MultilangTranslationProxy)
-    rp.title.should be_a_kind_of(String)
+    #rp.title.should be_an_instance_of(Multilang::MultilangTranslationProxy)
+    #rp.title.should be_a_kind_of(String)
     
-    rp.body.should respond_to(:translation)
-    rp.title.translation[:lv].should == "Latviešu nosaukums"
-    rp.body.translation[:ru].should == "Русский текст"
+    #rp.body.should respond_to(:translation)
+    #rp.title.translation[:lv].should == "Latviešu nosaukums"
+    #rp.body.translation[:ru].should == "Русский текст"
 
-    rp.title.to_s.should be_an_instance_of(String)
+    #rp.title.to_s.should be_an_instance_of(String)
   end
 
   it "should set/get some attributes in/from PartialrPost" do
@@ -215,16 +217,17 @@ describe Multilang do
     
     # test
     I18n.locale = :lv
-    rp.title.should == "Latviešu nosaukums"
-    rp.body.should == "Latviešu apraksts"
+    rp.title.should == {"lv"=>"Latviešu nosaukums"}
+    rp.body.should == {"lv"=>"Latviešu apraksts"}
+    rp.title_any.should == "Latviešu nosaukums"
+    rp.body_any.should == "Latviešu apraksts"
     
     I18n.locale = :ru
-    rp.title.should == ""
-    rp.body.should == ""
+    rp.title.should == {"lv"=>"Latviešu nosaukums"}
+    rp.body.should == {"lv"=>"Latviešu apraksts"}
+    rp.title_any.should == "Latviešu nosaukums"
+    rp.body_any.should == "Latviešu apraksts"
 
-    rp.title.any.should == "Latviešu nosaukums"
-    rp.body.any.should == "Latviešu apraksts"
-    
   end
 
   it "should set/get attributes directly from HStore underlying type returned by before_type_cast" do
@@ -263,9 +266,11 @@ describe Multilang do
     query_post = NamedPost.where(:name=>"First").first
     query_post.should_not be_nil
     I18n.locale = :es
-    query_post.title.should == "Spanish"
+    query_post.title.should ==
+      {"en"=>"English", "es"=>"Spanish"}
     I18n.locale = :en
-    query_post.title.should == "English"
+    query_post.title.should == 
+      {"en"=>"English", "es"=>"Spanish"}
    
     # update
     query_post.title = {:en=>"English USA", :es=>"Spanish LAT"}
@@ -275,9 +280,11 @@ describe Multilang do
     query_post = NamedPost.where(:name=>"First").first
     query_post.should_not be_nil
     I18n.locale = :es
-    query_post.title.should == "Spanish LAT"
+    query_post.title.should ==
+      {"en"=>"English USA", "es"=>"Spanish LAT"}
     I18n.locale = :en
-    query_post.title.should == "English USA"
+    query_post.title.should ==
+      {"en"=>"English USA", "es"=>"Spanish LAT"}
   end
 
   it "should be valid when required specified translations are present" do

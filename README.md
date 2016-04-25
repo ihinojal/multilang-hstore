@@ -66,14 +66,14 @@ Thats it!
 Now you are able to translate values for the attributes :title and :description per locale:
 
     I18n.locale = :en
-    post.title = 'Multilang rocks!'
+    post.title_any = 'Multilang rocks!'
     I18n.locale = :lv
-    post.title = 'Multilang rulle!'
+    post.title_any = 'Multilang rulle!'
 
     I18n.locale = :en
-    post.title #=> Multilang rocks!
+    post.title_any #=> 'Multilang rocks!'
     I18n.locale = :lv
-    post.title #=> Multilang rulle!
+    post.title_any #=> 'Multilang rulle!'
 
 
 You may assign attributes through auto generated methods (this methods depend from I18n.available_locales):
@@ -102,9 +102,9 @@ Also, you may ise same hashes with setters:
 
 You may get other translations via attribute translation method:
 
-    post.title.translation[:lv] #=> 'Multilang rocks!'
-    post.title.translation[:en] #=> 'Multilang rulle!'
-    post.title.translation.locales #=> [:en, :lv]
+    post.title[:lv] #=> 'Multilang rocks!'
+    post.title[:en] #=> 'Multilang rulle!'
+    post.title.keys #=> [:en, :lv]
 
 If you have incomplete translations, you can get translation from other locale:
 
