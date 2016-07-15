@@ -8,7 +8,7 @@ This project is a fork of [artworklv/multilang](https://github.com/artworklv/mul
 
 * Replaced YAML text fields in favor of Hstore fields.
 * The translation hash is no longer limited to locales in `I18n.available_locales`.
-* Support for Rails 3 and Rails 4.
+* Support for Rails 3, 4 and 5.
 
 ## Installation
 
@@ -22,7 +22,7 @@ Do not forget to run:
 
     bundle install
 
-### Rails 4
+### Rails 4 and 5
 
 Starting with version `1.0.0`, this gem is intented to be used in Rails 4. If you are migrating an existing project from Rails 3, make sure you read [Migrating to Rails 4](#Migrating-to-Rails-4).
 
